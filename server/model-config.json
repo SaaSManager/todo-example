@@ -20,5 +20,9 @@
   "Auth": {
     "dataSource": null,
     "public": true
+  },
+  "TodoItem": {
+    "dataSource": "in-memory",
+    "public": true
   }
 }

@@ -1,3 +1,13 @@
 {
-  "extends": "loopback"
+  "extends": "loopback",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules" :{
+    "comma-dangle": [ "error", "never"],
+    "max-len": ["error", 120],
+    "no-unused-vars": ["error"],
+    "arrow-parens": ["error", "always"]
+  }
 }

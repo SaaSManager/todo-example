@@ -12,7 +12,7 @@ angular.module('todoApp', ['ngRoute'])
   .component('todoList', {
     templateUrl: 'todo.html',
     controller: ['$scope', function () {
-      
+
     }]
   })
   .component('login', {

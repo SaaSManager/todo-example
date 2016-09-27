@@ -1,0 +1,8 @@
+{
+  "in-memory": {
+    "name": "in-memory",
+    "localStorage": "",
+    "file": "db.json",
+    "connector": "memory"
+  }
+}

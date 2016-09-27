@@ -1,0 +1,12 @@
+<div>
+  <form ng-submit="login($email,$password)">
+    <input type="email" ng-model="email" placeholder="email" class="form-control">
+    <input type="text" ng-model="domain" placeholder="domain" class="form-control">
+    <input type="password" ng-model="password" placeholder="password" class="form-control">
+    <input class="btn btn-primary" type="submit" value="Login">
+  </form>
+
+  <div ng-if="userInfo">
+    {{userInfo | json}}
+  </div>
+</div>

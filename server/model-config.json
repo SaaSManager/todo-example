@@ -13,10 +13,6 @@
       "./mixins"
     ]
   },
-  "ToDoList": {
-    "dataSource": "in-memory",
-    "public": true
-  },
   "Credentials": {
     "dataSource": null,
     "public": false

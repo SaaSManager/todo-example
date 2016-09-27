@@ -11,55 +11,73 @@ angular.module('todoApp', ['ngRoute'])
   ])
   .component('todoList', {
     templateUrl: 'todo.html',
-    controller: ['$scope', function () {
+    controller: ['$scope', '$location', '$http', function ($scope, $location, $http) {
+      if(!$scope.$root.accessToken) {
+        return $location.path('/login');
+      }
 
+      let maxTodoQuota = {
+          quantity: 0
+        },
+        quotas = $scope.$root.accessToken.userInfo.quota;
+
+      quotas.forEach(function (quoata) {
+        if(quoata.code === 'MAX_TODO_ITEMS') {
+          if(maxTodoQuota.quantity < quoata.quantity) {
+            maxTodoQuota = quoata;
+          }
+        }
+      });
+
+      $scope.todos = [];
+      $scope.maxTodo = maxTodoQuota;
+
+      $scope.addTodo = function () {
+        if($scope.todos.length >= $scope.maxTodo.quantity) {
+          return alert('Max TODO items reached. Please consider buying PREMIUM plan.');
+        }
+        $scope.todos.push({
+          name: $scope.myTodo,
+          done: false
+        });
+        $scope.myTodo = '';
+      };
+
+      $scope.inProgressTodo = function (todo) {
+        todo.done = false;
+      };
+
+      $scope.archiveAll = function () {
+        $scope.todos = $scope.todos.filter(function (todo) {
+          return !todo.done;
+        });
+      };
     }]
   })
   .component('login', {
     templateUrl: 'login.html',
     controller: ['$scope', '$location', '$http', function($scope, $location, $http) {
-        $scope.login = function() {
-          $http.post('/api/auth/login', {
-            username : $scope.email,
-            password : $scope.password
-          })
-            .then(response => {
-              console.log('userAccessToken', response);
-              $scope.$root.accessToken = response.data.access_token;
-              $location.path('/todo')
-            });
-        };
 
-        $scope.email = 'ggwozdz+1@neoteric.eu';
-        $scope.password = 'qweasd';
+      function parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(atob(base64));
+      }
 
-
-        var userInfo = null;
-        var todoList = this;
-        todoList.todos = [
-          {text:'learn angular', done:true},
-          {text:'build an angular app', done:false}];
-
-        todoList.addTodo = function() {
-          todoList.todos.push({text:todoList.todoText, done:false});
-          todoList.todoText = '';
-        };
-
-        todoList.remaining = function() {
-          var count = 0;
-          angular.forEach(todoList.todos, function(todo) {
-            count += todo.done ? 0 : 1;
+      $scope.login = function() {
+        $http.post('/api/auth/login', {
+          username : $scope.email,
+          password : $scope.password
+        })
+          .then(response => {
+            console.log('userAccessToken', response);
+            $scope.$root.accessToken = parseJwt(response.data.access_token);
+            $location.path('/todo')
           });
-          return count;
-        };
+      };
 
-        todoList.archive = function() {
-          var oldTodos = todoList.todos;
-          todoList.todos = [];
-          angular.forEach(oldTodos, function(todo) {
-            if (!todo.done) todoList.todos.push(todo);
-          });
-        };
-      }]
+      $scope.email = 'ggwozdz+1@neoteric.eu';
+      $scope.password = 'qweasd';
+    }]
   });
 

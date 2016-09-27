@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="todolist not-done">
+      <h1>Todos</h1>
+      <form ng-submit="addTodo()">
+        <input type="text" class="form-control add-todo" ng-model="myTodo" placeholder="Add todo" required>
+        <button id="checkAll" type="submit" class="btn btn-success">Add</button>
+      </form>
+
+      <hr>
+      <ul id="sortable" class="list-unstyled">
+        <li class="ui-state-default" ng-repeat="todo in todos | filter:{done: false} track by $index">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="todo.done" />
+              {{todo.name}}
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="todolist">
+      <h1>Already Done</h1>
+      <button type="button" class="btn btn-warning" ng-click="archiveAll()">Archive all</button>
+      <ul id="done-items" class="list-unstyled">
+        <li ng-repeat="todo in todos | filter:{done: true}">
+          {{todo.name}}
+          <button class="remove-item btn btn-default btn-xs pull-right" ng-click="inProgressTodo(todo)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

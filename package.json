@@ -21,7 +21,8 @@
     "request": "^2.75.0",
     "request-promise": "^4.1.1",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^1.0.1"
+    "strong-error-handler": "^1.0.1",
+    "lodash": "latest"
   },
   "devDependencies": {
     "eslint": "^2.13.1",

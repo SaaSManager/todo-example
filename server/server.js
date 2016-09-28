@@ -19,7 +19,7 @@ function parseJwt (token) {
 
 app.use(loopback.context());
 app.use(['/api/todos'], function(req, res, next) {
-  var accessToken = req.query.access_token || req.headers['Authorization'];
+  var accessToken = req.query.access_token || req.headers.authorization;
   if(accessToken) {
     app.accessTokenProvider.getUserInfo(accessToken)
       .then(userInfo => {

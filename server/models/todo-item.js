@@ -7,14 +7,22 @@ const loopback = require('loopback');
 module.exports = function(TodoItem) {
   TodoItem.observe('before save', (ctx, next) => {
 
-
     let context = loopback.getCurrentContext().get('userInfo');
     let user    =  context.user.userInfo;
+
+    if(ctx.instance) {
+      ctx.instance.userId = user.user.id;
+    } else if(ctx.currentInstance.userId !== user.user.id) {
+      return next({
+        status: 403,
+        code: 'ACCESS_FORBIDDEN',
+        message: 'Write access forbidden'
+      });
+    }
+
     let quota   = user.quota;
     let maxTodoItemsConstraints = _.filter(quota, {'code': 'MAX_TODO_ITEMS'}).map(quota => quota.quantity);
     let maxTodoItemsQuota = Math.max.apply(Math, maxTodoItemsConstraints);
-
-    ctx.instance.userId = user.user.id;
 
     log.debug('maxTodoItemsQuota: %d', maxTodoItemsQuota);
     TodoItem.count({userId: user.user.id})

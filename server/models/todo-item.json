@@ -16,6 +16,11 @@
       "required": true,
       "default": 1
     },
+    "done": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
     "userId": {
       "type": "string",
       "required": true

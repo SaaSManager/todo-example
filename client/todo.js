@@ -11,46 +11,45 @@ angular.module('todoApp', ['ngRoute'])
   ])
   .component('todoList', {
     templateUrl: 'todo.html',
-    controller: ['$scope', '$location', '$http', function ($scope, $location, $http) {
+    controller: ['$scope', '$location', '$http', '$timeout', function ($scope, $location, $http, $timeout) {
       if(!$scope.$root.accessToken) {
         return $location.path('/login');
       }
 
-      let maxTodoQuota = {
-          quantity: 0
-        },
-        quotas = $scope.$root.accessToken.userInfo.quota;
-
-      quotas.forEach(function (quoata) {
-        if(quoata.code === 'MAX_TODO_ITEMS') {
-          if(maxTodoQuota.quantity < quoata.quantity) {
-            maxTodoQuota = quoata;
-          }
-        }
+      $http.get('/api/todos').then(function (response) {
+        $scope.todos = response.data;
       });
 
-      $scope.todos = [];
-      $scope.maxTodo = maxTodoQuota;
-
       $scope.addTodo = function () {
-        if($scope.todos.length >= $scope.maxTodo.quantity) {
-          return alert('Max TODO items reached. Please consider buying PREMIUM plan.');
-        }
-        $scope.todos.push({
-          name: $scope.myTodo,
-          done: false
+        $http.post('/api/todos', {
+          desc: $scope.myTodo
+        }).then(function (response) {
+          $scope.todos.push(response.data);
+        }).catch(function (response) {
+          $scope.error = response.data.error;
+          $timeout(function () {
+            $scope.error = null;
+          }, 3000);
+        }).finally(function () {
+          $scope.myTodo = '';
         });
-        $scope.myTodo = '';
       };
 
-      $scope.inProgressTodo = function (todo) {
-        todo.done = false;
+      $scope.onDone = function (done) {
+        var todo = this.todo;
+        $http.put('/api/todos/'+todo.id, {
+          done: done
+        }).then(function () {
+          todo.done = done;
+        });
       };
 
       $scope.archiveAll = function () {
         $scope.todos = $scope.todos.filter(function (todo) {
+          if(todo.done) $http.delete('/api/todos/'+todo.id);
           return !todo.done;
         });
+
       };
     }]
   })
@@ -70,7 +69,7 @@ angular.module('todoApp', ['ngRoute'])
           password : $scope.password
         })
           .then(response => {
-            console.log('userAccessToken', response);
+            $http.defaults.headers.common.Authorization = response.data.access_token;
             $scope.$root.accessToken = parseJwt(response.data.access_token);
             $location.path('/todo')
           });

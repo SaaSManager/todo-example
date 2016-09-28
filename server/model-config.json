@@ -24,5 +24,9 @@
   "TodoItem": {
     "dataSource": "in-memory",
     "public": true
+  },
+  "Plan": {
+    "dataSource": null,
+    "public": true
   }
 }

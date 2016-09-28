@@ -29,5 +29,9 @@
   "userAuthConfig": {
     "tokenInfoUrl": "http://userapp-auth.dev.saasmgr.com/api/appUsers/oauth/tokeninfo",
     "tokenUrl": "http://userapp-auth.dev.saasmgr.com/api/appUsers/oauth/token"
+  },
+  "saasManagerApis": {
+    "plansUrl": "http://subscription-api.dev.saasmgr.com/api/plans"
   }
+
 }

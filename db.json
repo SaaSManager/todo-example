@@ -1,6 +1,6 @@
 {
   "ids": {
-    "TodoItem": 26
+    "TodoItem": 27
   },
   "models": {
     "TodoItem": {
@@ -9,7 +9,8 @@
       "20": "{\"desc\":\"przemek jednak umi 4\",\"priority\":1,\"done\":false,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":20}",
       "23": "{\"desc\":\"przemek jednak umi 7\",\"priority\":1,\"done\":false,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":23}",
       "24": "{\"desc\":\"przemek jednak umi 8\",\"priority\":1,\"done\":false,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":24}",
-      "25": "{\"desc\":\"przemek jednak umi 9\",\"priority\":1,\"done\":false,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":25}"
+      "25": "{\"desc\":\"przemek jednak umi 9\",\"priority\":1,\"done\":false,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":25}",
+      "26": "{\"desc\":\"test1\",\"priority\":1,\"done\":true,\"userId\":\"57ea5ad8b387780012bef959\",\"id\":26}"
     }
   }
 }

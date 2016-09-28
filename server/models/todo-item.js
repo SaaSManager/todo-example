@@ -11,8 +11,8 @@ module.exports = function(TodoItem) {
     let context = loopback.getCurrentContext().get('userInfo');
     let user    =  context.user.userInfo;
     let quota   = user.quota;
-    let maxTodoItemsContstraints = _.filter(quota, {'code': 'MAX_TODO_ITEMS'}).map(quota => quota.quantity);
-    let maxTodoItemsQuota = Math.max.apply(Math, maxTodoItemsContstraints);
+    let maxTodoItemsConstraints = _.filter(quota, {'code': 'MAX_TODO_ITEMS'}).map(quota => quota.quantity);
+    let maxTodoItemsQuota = Math.max.apply(Math, maxTodoItemsConstraints);
 
     ctx.instance.userId = user.user.id;
 

@@ -24,11 +24,6 @@ angular.module('todoApp', ['ngRoute'])
         $scope.todos = response.data;
       });
 
-      $http.get('/api/plans?filter={"where":{"isDefault":false,"isAvailable": true}}')
-        .then(function (response) {
-          $scope.plans = response.data;
-        });
-
       $scope.addTodo = function () {
         $http.post('/api/todos', {
           desc: $scope.myTodo
@@ -53,10 +48,6 @@ angular.module('todoApp', ['ngRoute'])
         });
       };
 
-      $scope.purchase = function (plan) {
-
-      };
-
       $scope.archiveAll = function () {
         $scope.todos = $scope.todos.filter(function (todo) {
           if(todo.done) $http.delete('/api/todos/'+todo.id);
@@ -64,6 +55,38 @@ angular.module('todoApp', ['ngRoute'])
         });
 
       };
+    }]
+  })
+  .component('plans', {
+    templateUrl: 'plans.html',
+    controller: ['$scope', '$http', function($scope, $http) {
+      $http.get('/api/plans?filter={"where":{"isDefault":false,"isAvailable": true}}')
+        .then(function (response) {
+          $scope.plans = response.data;
+        });
+
+      $scope.purchase = function (plan) {
+        $http.post('/api/plans/'+plan.id+'/buy', {
+          profileId: $scope.$root.accessToken.userInfo.profile.id,
+          nonce: undefined // braintree integration
+        }).then(function () {
+          alert('You have bought plan ' + plan.name);
+        })
+      };
+
+    }]
+  })
+  .component('currentSubscriptions', {
+    templateUrl: 'currentSubscriptions.html',
+    controller: ['$scope', '$http', function($scope, $http) {
+      $scope.subscriptions = $scope.$root.accessToken.userInfo.subscriptions;
+
+      $scope.cancel = function (subscription) {
+        $http.post('/api/subscriptions/'+subscription.id + '/cancel').then(function (response) {
+          subscription.status = response.data.status;
+          subscription.cancelledDate = response.data.cancelledDate;
+        });
+      }
     }]
   })
   .component('register', {

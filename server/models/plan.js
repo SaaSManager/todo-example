@@ -17,6 +17,7 @@ module.exports = function(Plan) {
     http: {path: '/:planId/buy'},
     accepts: [
       {arg: 'planId', type: 'string', 'http': {source: 'path'}},
+      {arg: 'profileId', type: 'string', required: true},
       {arg: 'nonce', required: false, type: 'string'}
     ],
     returns: {arg: 'plans', type: 'object', root: true},
@@ -40,7 +41,7 @@ module.exports = function(Plan) {
       .catch((error) => callback(error));
   };
 
-  Plan.buy = (planId, nonce, callback) => {
+  Plan.buy = (planId, profileId, nonce, callback) => {
     let saasManagerApis = Plan.app.get('saasManagerApis');
     let buyPlansUrl = saasManagerApis.plansUrl + '/' + planId + '/buy';
 

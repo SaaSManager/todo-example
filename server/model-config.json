@@ -28,5 +28,9 @@
   "Plan": {
     "dataSource": null,
     "public": true
+  },
+  "Subscription": {
+    "dataSource": null,
+    "public": true
   }
 }

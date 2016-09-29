@@ -1,0 +1,13 @@
+<div class="col-md-12">
+  <h1>Your subscriptions</h1>
+  <div class="col-md-12 panel panel-default" ng-repeat="subscription in subscriptions">
+    <div class="panel-body">
+      <div class="col-md-12">{{subscription.planId}}</div>
+      <div class="col-md-12">{{subscription.status}}</div>
+      <div class="col-md-12">{{subscription.startDate| date}} - {{subscription.endDate| date}}</div>
+      <div class="col-md-12">
+        <input type="submit" class="btn btn-xs col-md-12 btn-danger" ng-click="cancel(subscription)" value="Cancel">
+      </div>
+    </div>
+  </div>
+</div>

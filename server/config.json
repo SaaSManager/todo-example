@@ -32,7 +32,8 @@
     "register": "http://userapp-auth.dev.saasmgr.com/api/appUsers/register"
   },
   "saasManagerApis": {
-    "plansUrl": "http://subscription-api.dev.saasmgr.com/api/plans"
+    "plansUrl": "http://subscription-api.dev.saasmgr.com/api/plans",
+    "subscriptionsUrl": "http://subscription-api.dev.saasmgr.com/api/subscriptions"
   }
 
 }

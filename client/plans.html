@@ -1,0 +1,14 @@
+<div class="col-md-12">
+  <h1>Upgrade your plan</h1>
+  <div class="col-md-12 panel panel-default" ng-repeat="plan in plans">
+    <div class="panel-body">
+      <div class="col-md-12">{{plan.name}}</div>
+      <div class="col-md-12">{{plan.desc}}</div>
+      <div class="col-md-12">{{plan.customData.customAtrribute}}</div>
+      <button class="btn btn-primary btn-xs col-md-12 pull-right" ng-click="purchase(plan)">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+      </button>
+    </div>
+
+  </div>
+</div>

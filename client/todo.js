@@ -20,6 +20,11 @@ angular.module('todoApp', ['ngRoute'])
         $scope.todos = response.data;
       });
 
+      $http.get('/api/plans?filter={"where":{"isDefault":false,"isAvailable": true}}')
+        .then(function (response) {
+          $scope.plans = response.data;
+        });
+
       $scope.addTodo = function () {
         $http.post('/api/todos', {
           desc: $scope.myTodo
@@ -42,6 +47,10 @@ angular.module('todoApp', ['ngRoute'])
         }).then(function () {
           todo.done = done;
         });
+      };
+
+      $scope.purchase = function (plan) {
+
       };
 
       $scope.archiveAll = function () {

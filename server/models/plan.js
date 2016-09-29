@@ -9,7 +9,18 @@ module.exports = function(Plan) {
     accepts: [
       {arg: 'filter', type: 'string', 'http': {source: 'query'}}
     ],
-    returns: {arg: 'plans', type: 'object', root: true}
+    returns: {arg: 'plans', type: 'object', root: true},
+    description: 'Fetch list of premium (non-default) plans'
+  });
+
+  Plan.remoteMethod('buy', {
+    http: {path: '/:planId/buy'},
+    accepts: [
+      {arg: 'planId', type: 'string', 'http': {source: 'path'}},
+      {arg: 'nonce', required: false, type: 'string'}
+    ],
+    returns: {arg: 'plans', type: 'object', root: true},
+    description: 'Purchase plan for current user'
   });
 
   Plan.getPlans = (filter, callback) => {
@@ -22,6 +33,27 @@ module.exports = function(Plan) {
           method: 'GET', uri: plansUrl, json: true, qs: {
             filter: filter,
             'access_token': tenantAccessToken.access_token
+          }
+        });
+      })
+      .then((plans) => callback(false, plans))
+      .catch((error) => callback(error));
+  };
+
+  Plan.buy = (planId, nonce, callback) => {
+    let saasManagerApis = Plan.app.get('saasManagerApis');
+    let buyPlansUrl = saasManagerApis.plansUrl + '/' + planId + '/buy';
+
+    Plan.app.accessTokenProvider.getAccessToken()
+      .then((tenantAccessToken) => {
+        return request({
+          method: 'POST', uri: buyPlansUrl, json: true,
+          qs: {
+            'access_token': tenantAccessToken.access_token
+          },
+          body: {
+            nonce: nonce,
+            profileId: profileId
           }
         });
       })

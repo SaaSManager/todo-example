@@ -23,7 +23,7 @@
   "tenantAuthConfig": {
     "tokenInfoUrl": "http://saasmgr-auth.dev.saasmgr.com/api/tenantAuth/oauth/tokeninfo",
     "tokenUrl": "http://saasmgr-auth.dev.saasmgr.com/api/tenantAuth/oauth/token",
-    "email": "ggwozdz+orange1@neoteric.eu",
+    "email": "ggwozdz+orange4@neoteric.eu",
     "password": "qweasd99"
   },
   "userAuthConfig": {

@@ -20,9 +20,10 @@ angular.module('todoApp', ['ngRoute'])
         return $location.path('/login');
       }
 
-      $http.get('/api/todos').then(function (response) {
-        $scope.todos = response.data;
-      });
+      $http.get('/api/todos?filter={"where":{"userId": "'+ $scope.$root.accessToken.userInfo.user.id +'"}}')
+        .then(function (response) {
+          $scope.todos = response.data;
+        });
 
       $scope.addTodo = function () {
         $http.post('/api/todos', {
@@ -128,7 +129,7 @@ angular.module('todoApp', ['ngRoute'])
       };
 
       $scope.email = 'ggwozdz+1@neoteric.eu';
-      $scope.password = 'qweasd';
+      $scope.password = 'qweasd99';
     }]
   });
 

@@ -27,7 +27,7 @@ module.exports = function(TodoItem) {
     log.debug('maxTodoItemsQuota: %d', maxTodoItemsQuota);
     TodoItem.count({userId: user.user.id})
       .then((count) => {
-        if (count <= maxTodoItemsQuota) {
+        if (count < maxTodoItemsQuota) {
           next();
         } else {
           next({

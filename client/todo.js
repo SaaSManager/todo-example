@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('todoApp', ['ngRoute'])
   .config(['$locationProvider', '$routeProvider',
     function config($locationProvider, $routeProvider) {
@@ -6,7 +8,9 @@ angular.module('todoApp', ['ngRoute'])
           template: '<todo-list></todo-list>'
         }).when('/login', {
           template: '<login></login>'
-      }).otherwise('/login');
+        }).when('/register', {
+          template: '<register></register>'
+        }).otherwise('/login');
     }
   ])
   .component('todoList', {
@@ -60,6 +64,22 @@ angular.module('todoApp', ['ngRoute'])
         });
 
       };
+    }]
+  })
+  .component('register', {
+    templateUrl: 'register.html',
+    controller: ['$scope', '$location', '$http', function($scope, $location, $http) {
+      $scope.register = function () {
+        $http.post('/api/auth/register', {
+          name: $scope.name,
+          email: $scope.email,
+          password: $scope.password
+        }).then(function () {
+          $location.path('/login');
+        }).catch(function (response) {
+          $scope.error = response.data.error;
+        });
+      }
     }]
   })
   .component('login', {

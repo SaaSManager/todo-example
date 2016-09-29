@@ -1,12 +1,25 @@
-<div>
-  <form ng-submit="login()">
-    <input type="email" ng-model="email" placeholder="email" class="form-control">
-    <input type="text" ng-model="domain" placeholder="domain" class="form-control">
-    <input type="password" ng-model="password" placeholder="password" class="form-control">
-    <input class="btn btn-primary" type="submit" value="Login">
-  </form>
-
-  <div ng-if="userInfo">
-    {{userInfo | json}}
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel">
+      <form ng-submit="login()">
+        <div class="form-group">
+          <input type="email" ng-model="email" placeholder="email" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="text" ng-model="domain" placeholder="domain" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" ng-model="password" placeholder="password" class="form-control">
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <input type="submit" tabindex="4" class="form-control btn btn-primary" value="Login">
+            </div>
+          </div>
+        </div>
+      </form>
+      <a href="/#register">Register</a>
+    </div>
   </div>
 </div>
